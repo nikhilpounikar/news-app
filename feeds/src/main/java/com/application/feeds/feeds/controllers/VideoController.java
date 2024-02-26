@@ -1,5 +1,7 @@
 package com.application.feeds.feeds.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,12 +27,12 @@ public class VideoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Video>> getAllNews(@RequestParam(defaultValue = "1") int pageNumber,
+    public ResponseEntity<List<Video>> getAllNews(@RequestParam(defaultValue = "1") int pageNumber,
             @RequestParam(defaultValue = "3") int pageSize) {
     	
     	Pageable pageable = PageRequest.of(pageNumber, pageSize,Sort.by(Sort.Direction.ASC, "id"));
         Page<Video> videoPage = videoRepository.findAll(pageable);
-        return ResponseEntity.ok(videoPage);
+        return ResponseEntity.ok(videoPage.getContent());
     }
 
     @PostMapping

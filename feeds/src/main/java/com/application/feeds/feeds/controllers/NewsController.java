@@ -1,5 +1,7 @@
 package com.application.feeds.feeds.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,12 +26,12 @@ public class NewsController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<News>> getAllNews(@RequestParam(defaultValue = "0") int pageNumber,
+    public ResponseEntity<List<News>> getAllNews(@RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize) {
-    	System.out.println(pageNumber+" "+pageSize);
+    	
     	Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<News> newsPage = newsRepository.findAll(pageable);
-        return ResponseEntity.ok(newsPage);
+        return ResponseEntity.ok(newsPage.getContent());
     }
     
     @PostMapping
